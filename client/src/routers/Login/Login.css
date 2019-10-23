@@ -1,0 +1,78 @@
+#login-page {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #DEF3F4;
+    z-index: 99;
+}
+
+#login-page .container {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: -5px 5px 20px black;
+    width: 320px;
+    height: 380px;
+    padding: 35px;
+    color: #EEE;
+    border-radius: 5px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -160px;
+    margin-top: -190px;
+}
+
+#login-page .backgroundBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../../assets/img/login-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    transition: all .5s
+}
+
+#animationbg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    transition: all .5s
+}
+
+#login-page .container h3 {
+    text-align: center;
+    height: 20px;
+    font: 20px "microsoft yahei", Helvetica, Tahoma, Arial, "Microsoft jhengHei", sans-serif;
+    color: black;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 0 35px 0;
+}
+
+#login-page .container input {
+    height: 46px;
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.ant-row {
+    padding-bottom: 12px;
+}
+
+#login-page .container Button {
+    height: 46px;
+    width: 100%;
+    font-size: 20px;
+}
