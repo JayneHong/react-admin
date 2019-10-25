@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import BGParticle from '../../utils/BGParticle'
-import { Form, Button, Input, Icon, Checkbox } from 'antd'
-import './Login.css'
+import { Form, Button, Input, Icon, Checkbox, message, Spin } from 'antd'
+import './login.css'
 import 'animate.css'
 import axios from 'axios'
+import { reqLogin } from '../../api'
 
 
 class Login extends Component {
@@ -16,7 +17,10 @@ class Login extends Component {
         form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+
+                this.setState({ loading: true });
                 login(values).then((r) => {
+                    this.setState({ loading: false });
                     if (r) {
                         //保存密码
                         if (values.remember) {
@@ -27,8 +31,13 @@ class Login extends Component {
                             delete window.sessionStorage.remember;
                         }
 
+                        message.success("登录成功");
                         history.push('/index');
+                    } else {
+                        message.error(this.props.login_error);
                     }
+                }).catch(() => {
+                    this.setState({ loading: false });
                 });
             }
         });
@@ -50,9 +59,10 @@ class Login extends Component {
         new BGParticle('animationbg').init()
     }
 
+    state = { loading: false };
+
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { login_error } = this.props;
 
         return (
             <div id='login-page'>
@@ -92,10 +102,11 @@ class Login extends Component {
                                 initialValue: true,
                             })(<Checkbox>记住密码</Checkbox>)}
                             <a className="login-form-forgot" href="">找回密码</a>
-                            <Button type="primary" htmlType="submit" className="login-form-button">
-                                登录
-                            </Button>
-                            {login_error}
+                            <Spin spinning={this.state.loading} indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
+                                <Button type="primary" htmlType="submit" className="login-form-button">
+                                    登录
+                                </Button>
+                            </Spin>
                         </Form.Item>
                     </Form>
                 </div>
@@ -114,12 +125,12 @@ const mapDispatchToProps = (dispatch) => {
     return {
         login: (user) => {
             return dispatch((dispatch, getState) => {
-                let params = { userId: user.username, userPwd: user.password };
-                return axios.post('/users/login', params).then((result) => {
+                const { username, password } = user;
+                return reqLogin(username, password).then((result) => {
                     let data = result.data;
                     dispatch({ type: 'LOGIN', payload: { ...data, isLogin: data.code === 1 } });
                     return data.code === 1;
-                }).catch(console.err);
+                })
             })
         }
     }

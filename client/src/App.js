@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom'
 import PrivateRoute from './components/PrivateRouter'
-import Login from '../src/routers/Login/Login'
-import Index from './routers/Index'
+import Login from './routers/login/login'
+import Index from './routers/index/index'
 import './App.css'
 
 function App() {
